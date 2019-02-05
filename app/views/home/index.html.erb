@@ -1,0 +1,9 @@
+<% if user_signed_in? %>
+  <% if @current %>
+    <p>Your Current Todo is : <%= link_to @current.title, todos_path %> </p>
+  <% else %>
+    <p><%= link_to "You're All Set!!", todos_path %></p>
+  <% end %>
+<% else %>
+  <p>You're NOT Logged in.</p>
+<% end %>

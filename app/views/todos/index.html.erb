@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Todos</h1>
+
+<%= form_with(url: todos_path, method: "get", local: true) do |f| %>
+  <%= f.text_field :keyword, value: params[:keyword] %>
+  <%= f.submit "filter" %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Done</th>
+      <th>Title</th>
+      <th>Body</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @todos.each do |todo| %>
+      <tr>
+        <td>
+          <%= form_with(model: todo) do |f| %>
+            <%= f.check_box :done, data: {url: toggle_todo_path(todo), remote: true, method: :patch} %>
+          <% end %>
+        </td>
+        <td><%= todo.title %></td>
+        <td><%= todo.body %></td>
+        <td><%= link_to 'Show', todo %></td>
+        <td><%= link_to 'Edit', edit_todo_path(todo) %></td>
+        <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Todo', new_todo_path %>
